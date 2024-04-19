@@ -100,6 +100,18 @@ function question3(userData, hobbyData) {
 
     const hobbyName = hobbyInfo[maxHobbyID];
 
+    console.log(hobbyCount);
+    // console.log(hobbyInfo);
+
+    //if key in hobbyCount is in hobbyInfo, then get the value of the key in hobbyInfo and replace the key for hobbyCount with the value
+    Object.keys(hobbyCount).forEach((key) => {
+        if (key in hobbyInfo) {
+            hobbyCount[hobbyInfo[key]] = hobbyCount[key];
+            delete hobbyCount[key];
+        }
+    });
+    console.log(hobbyCount);
+
     // * Reduce Method for Hobby Name
     // const hobbyName = hobbyInfo[Object.keys(hobbyCount).reduce((a, b) => (hobbyCount[a] > hobbyCount[b] ? a : b))];
 
