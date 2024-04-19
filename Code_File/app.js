@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const { EOL } = require("os");
+const path = require("path");
 
 function title(str) {
     return str
@@ -86,7 +87,7 @@ async function main() {
     // const hobbies = await fs.readFile("hobbies.csv", "utf-8");
     try {
         // ! More Correct Way; Runs the csv files in parallel
-        const [userData, hobbyData] = await Promise.all([fs.readFile("users.csv", "utf-8"), fs.readFile("hobbies.csv", "utf-8")]);
+        const [userData, hobbyData] = await Promise.all([fs.readFile(path.join(__dirname,"users.csv"), "utf-8"), fs.readFile(path.join(__dirname, "hobbies.csv"), "utf-8")]);
         // * Returns the result of array [Users.csv Content, Hobbies.csv Content] ; using result[1] will get Users.csv Content
         question1(userData);
         question2(userData);
