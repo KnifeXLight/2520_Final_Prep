@@ -54,7 +54,7 @@ function question2(data) {
     });
 }
 
-// * Question 3 - What is the most popular hobbies among the users?
+// * Question 3 - What is the most popular hobbies amongst the users?
 // * They will be using another file, so you will need to read the file and parse it
 function question3(userData, hobbyData) {
     const userRows = userData.split(EOL);
@@ -70,15 +70,45 @@ function question3(userData, hobbyData) {
         const [id, name] = hobby.split(",");
         hobbyInfo[id] = name;
     });
-    const hobbyID = Object.keys(hobbyCount).reduce((a, b) => (hobbyCount[a] > hobbyCount[b] ? a : b));
-    const hobbyName = hobbyInfo[Object.keys(hobbyCount).reduce((a, b) => (hobbyCount[a] > hobbyCount[b] ? a : b))];
-    // const hobbyName = hobbyRows.find((hobby) => hobby.split(",")[0] === hobbyInfo).split(",")[1];
+
+    // * ForEach() method for getting Hobby ID
+    let maxHobbyCount = 0;
+    let maxHobbyID = null;
+
+    Object.keys(hobbyCount).forEach((hobbyID) => {
+        if (hobbyCount[hobbyID] > maxHobbyCount) {
+            maxHobbyCount = hobbyCount[hobbyID];
+            maxHobbyID = hobbyID;
+        }
+    });
+
+    const hobbyID = maxHobbyID;
+
+    // * Reduce Method for Hobby ID
+    // const hobbyID = Object.keys(hobbyCount).reduce((a, b) => (hobbyCount[a] > hobbyCount[b] ? a : b));
+
+    // * ForEach() method for getting Hobby Name
+    let maxHobbyCount2 = 0;
+    let maxHobbyID2 = null;
+
+    Object.keys(hobbyCount).forEach((hobbyID) => {
+        if (hobbyCount[hobbyID] > maxHobbyCount2) {
+            maxHobbyCount2 = hobbyCount[hobbyID];
+            maxHobbyID2 = hobbyID;
+        }
+    });
+
+    const hobbyName = hobbyInfo[maxHobbyID];
+
+    // * Reduce Method for Hobby Name
+    // const hobbyName = hobbyInfo[Object.keys(hobbyCount).reduce((a, b) => (hobbyCount[a] > hobbyCount[b] ? a : b))];
+
     console.log(`${title(hobbyName)} is the most popular hobby with ${hobbyCount[hobbyID]} users`);
 }
 
 // Might be using a map to get the hobbies of the users
 
-// * Question 4 
+// * Question 4
 // ! HINT: They will be using both files, so you will need to read both files and parse them
 
 async function main() {
@@ -87,7 +117,7 @@ async function main() {
     // const hobbies = await fs.readFile("hobbies.csv", "utf-8");
     try {
         // ! More Correct Way; Runs the csv files in parallel
-        const [userData, hobbyData] = await Promise.all([fs.readFile(path.join(__dirname,"users.csv"), "utf-8"), fs.readFile(path.join(__dirname, "hobbies.csv"), "utf-8")]);
+        const [userData, hobbyData] = await Promise.all([fs.readFile(path.join(__dirname, "users.csv"), "utf-8"), fs.readFile(path.join(__dirname, "hobbies.csv"), "utf-8")]);
         // * Returns the result of array [Users.csv Content, Hobbies.csv Content] ; using result[1] will get Users.csv Content
         question1(userData);
         question2(userData);
